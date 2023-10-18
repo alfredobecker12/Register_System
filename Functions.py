@@ -1,9 +1,7 @@
 import string
 import os
 
-
 registeredUsers = {}
-
 
 def passwordCheck(password):
     upperscore = 0
@@ -87,7 +85,7 @@ def login():
             exit()
         print(f"\nSenha Incorreta. Tente novamente ({cont} tentativas restantes).\n")
 
-
+        
 def main():
     while True:
         optionSelected = homePage()
@@ -98,9 +96,5 @@ def main():
             register()
         elif optionSelected == "3":
             os.system("cls")
-            exit()
-
-
-if __name__ == "__main__":
-    main()
-
+            exit()       
+            
