@@ -1,27 +1,28 @@
 import string
 import os
+import random
 
-registeredUsers = {}
+registeredUsers = {"Admin12":"Admin123@"}
 
 def passwordCheck(password):
-    upperscore = 0
-    alphascore = 0
-    numscore = 0
-    specialscore = 0
+    upper = False
+    alpha = False
+    num = False
+    special = False
     
     if (12 >= len(password) >= 8):
         for i in password:
             if i.isdigit():
-                numscore += 1
-            elif i.isalpha() and i.isupper():
-                upperscore += 1
-                alphascore += 1
+                num = True
+            elif i.isupper():
+                upper = True
+                alpha = True
             elif i.isalpha():
-                alphascore += 1
+                alpha = True
             elif i in list(string.punctuation):
-                specialscore += 1
+                special = True
         
-        if upperscore and alphascore and numscore and specialscore > 0:
+        if upper and alpha and num and special:
             print("\nA senha é segura.")
             return True
         else:
@@ -32,10 +33,48 @@ def passwordCheck(password):
         return False
 
 
+def userCheck(username):
+    if len(username) < 6:
+            return None
+    
+    if username in registeredUsers.keys():
+        suggestions = []
+        while len(suggestions) != 3:
+            suggestion = username + str(random.randrange(10, 1000))
+            if suggestion not in registeredUsers.keys():
+                suggestions.append(suggestion)
+        print("\nUsuário já existente. Tente outro ou escolha uma das sugestões abaixo\n")
+        for i in range(len(suggestions)):
+            print(f"{i+1}. {suggestions[i]}\n")
+        option = input("4. Tentar outro username\n")
+        
+        if option == "1":
+            return suggestions[0]
+        elif option == "2":
+            return suggestions[1]
+        elif option == "3":
+
+            return suggestions[2] 
+        elif option == "4":
+
+            return None
+        else:
+            print("Opção inválida. Tente realizar o cadastro novamente.")
+            return None
+    else:
+        return username
+
+
 def register():
-    os.system("cls")
-    print("Insira seu login: ")
-    tempUser = input()
+    while True:
+        tempUser = input("\nInsira seu username de no mínimo 6 caracteres: ")
+        newTempUser = userCheck(tempUser)
+        if newTempUser is not None:
+            tempUser = newTempUser
+            break 
+        elif newTempUser is None:
+            continue
+    
     while True:
         tempPass = input("\nInsira sua senha seguindo os seguintes parâmetros:\n.8 - 12 Caracteres\n.1 Caractere maiúsculo\n.1 Caractere especial.\nSenha: ")
 
@@ -85,7 +124,7 @@ def login():
             exit()
         print(f"\nSenha Incorreta. Tente novamente ({cont} tentativas restantes).\n")
 
-        
+
 def main():
     while True:
         optionSelected = homePage()
@@ -96,5 +135,5 @@ def main():
             register()
         elif optionSelected == "3":
             os.system("cls")
-            exit()       
-            
+            exit() 
+
