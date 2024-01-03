@@ -1,4 +1,4 @@
-import Functions      
+import register_functions      
             
 if __name__ == "__main__":
-    Functions.main()    
+    register_functions.main()    
